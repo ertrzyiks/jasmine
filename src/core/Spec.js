@@ -116,10 +116,15 @@ getJasmineRequireObj().Spec = function(j$) {
     return this.getSpecName(this);
   };
 
-  Spec.pendingSpecExceptionMessage = '=> marked Pending';
+  Spec.PendingSpecException = function(message) {
+    this.name = 'PendingSpec';
+    this.message = message;
+  };
+
+  Spec.PendingSpecException.prototype = Error.prototype;
 
   Spec.isPendingSpecException = function(e) {
-    return !!(e && e.toString && e.toString().indexOf(Spec.pendingSpecExceptionMessage) !== -1);
+    return !!(e && e.name === 'PendingSpec');
   };
 
   return Spec;

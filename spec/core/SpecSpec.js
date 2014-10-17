@@ -1,17 +1,10 @@
 describe("Spec", function() {
 
   it("#isPendingSpecException returns true for a pending spec exception", function() {
-    var e = new Error(j$.Spec.pendingSpecExceptionMessage);
+    var PendingSpecException = j$.Spec.PendingSpecException,
+        e = new PendingSpecException();
 
     expect(j$.Spec.isPendingSpecException(e)).toBe(true);
-  });
-
-  it("#isPendingSpecException returns true for a pending spec exception (even when FF bug is present)", function() {
-    var fakeError = {
-      toString: function() { return "Error: " + j$.Spec.pendingSpecExceptionMessage; }
-    };
-
-    expect(j$.Spec.isPendingSpecException(fakeError)).toBe(true);
   });
 
   it("#isPendingSpecException returns false for not a pending spec exception", function() {
@@ -241,8 +234,9 @@ describe("Spec", function() {
 
    describe("when a spec is marked pending during execution", function() {
     it("should mark the spec as pending", function() {
-      var fakeQueueRunner = function(opts) {
-          opts.onException(new Error(j$.Spec.pendingSpecExceptionMessage));
+      var PendingSpecException = j$.Spec.PendingSpecException,
+        fakeQueueRunner = function(opts) {
+          opts.onException(new PendingSpecException());
         },
         spec = new j$.Spec({
           description: 'my test',

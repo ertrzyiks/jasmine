@@ -7,9 +7,19 @@ describe("Env", function() {
 
   describe("#pending", function() {
     it("throws the Pending Spec exception", function() {
+      var PendingSpecException = j$.Spec.PendingSpecException;
+
       expect(function() {
         env.pending();
-      }).toThrow(j$.Spec.pendingSpecExceptionMessage);
+      }).toThrow(new PendingSpecException());
+    });
+
+    it("throws the Pending Spec exception with custom message", function() {
+      var PendingSpecException = j$.Spec.PendingSpecException;
+
+      expect(function() {
+        env.pending('Doesnt work, issue #123');
+      }).toThrow(new PendingSpecException('Doesnt work, issue #123'));
     });
   });
 
